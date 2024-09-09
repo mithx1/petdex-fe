@@ -1,16 +1,19 @@
 import React from "react";
 import SideNav from "../components/SideNav/SideNav";
 import { Box } from "@mui/material";
-
+import Navbar from "../components/Appbar/Navbar";
 
 const HomePage: React.FC = () => {
   return (
-    <Box sx={{ display: "flex" }}>
-      <SideNav />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <h1>Home</h1>
+    <>
+      <Navbar />
+      <Box sx={{ display: "flex" }}>
+        <SideNav />
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <h1>Home</h1>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 
