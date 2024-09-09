@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import { styled, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -12,11 +12,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { useNavigate } from "react-router-dom";
 import BungalowSharpIcon from "@mui/icons-material/BungalowSharp";
 import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 import SettingsSharpIcon from "@mui/icons-material/SettingsSharp";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleDrawer, selectDrawerOpen } from "../../state/drawer/drawerSlice";
 
 const drawerWidth = 240;
 
@@ -76,14 +77,15 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideNav() {
-  const [open, setOpen] = React.useState(true);
+  const dispatch = useDispatch();
+  const open = useSelector(selectDrawerOpen);
   const navigate = useNavigate();
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={() => setOpen(!open)}>
+          <IconButton onClick={() => dispatch(toggleDrawer())}>
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>

@@ -1,11 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 const initialState = {
   open: true,
 };
 
 const drawerSlice = createSlice({
-  name: 'drawer',
+  name: "drawer",
   initialState,
   reducers: {
     toggleDrawer: (state) => {
@@ -13,6 +14,9 @@ const drawerSlice = createSlice({
     },
   },
 });
+
+// Selector to get the open state
+export const selectDrawerOpen = (state: RootState) => state.drawer.open;
 
 export const { toggleDrawer } = drawerSlice.actions;
 export default drawerSlice.reducer;
