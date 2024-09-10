@@ -47,209 +47,78 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme }) => ({
+})(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
-      },
-    },
-    {
-      props: ({ open }) => !open,
-      style: {
-        ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme),
-      },
-    },
-  ],
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
 }));
 
+const menuItems = [
+  { text: "Home", icon: <BungalowSharpIcon />, path: "/" },
+  { text: "About", icon: <InfoSharpIcon />, path: "/about" },
+  { text: "Settings", icon: <SettingsSharpIcon />, path: "/settings" },
+];
+
 export default function SideNav() {
+  const dispatch = useDispatch();
   const open = useSelector(selectDrawerOpen);
   const navigate = useNavigate();
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Box height={30} />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton>
+          <IconButton onClick={() => dispatch(toggleDrawer())}>
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <ListItemButton
-              sx={[
-                {
+          {menuItems.map((item, index) => (
+            <ListItem
+              key={index}
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => navigate(item.path)}
+            >
+              <ListItemButton
+                sx={{
                   minHeight: 48,
                   px: 2.5,
-                },
-                open
-                  ? {
-                      justifyContent: "initial",
-                    }
-                  : {
-                      justifyContent: "center",
-                    },
-              ]}
-            >
-              <ListItemIcon
-                sx={[
-                  {
+                  justifyContent: open ? "initial" : "center",
+                }}
+              >
+                <ListItemIcon
+                  sx={{
                     minWidth: 0,
                     justifyContent: "center",
-                  },
-                  open
-                    ? {
-                        mr: 3,
-                      }
-                    : {
-                        mr: "auto",
-                      },
-                ]}
-              >
-                <BungalowSharpIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Home"
-                sx={[
-                  open
-                    ? {
-                        opacity: 1,
-                      }
-                    : {
-                        opacity: 0,
-                      },
-                ]}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/about");
-            }}
-          >
-            <ListItemButton
-              sx={[
-                {
-                  minHeight: 48,
-                  px: 2.5,
-                },
-                open
-                  ? {
-                      justifyContent: "initial",
-                    }
-                  : {
-                      justifyContent: "center",
-                    },
-              ]}
-            >
-              <ListItemIcon
-                sx={[
-                  {
-                    minWidth: 0,
-                    justifyContent: "center",
-                  },
-                  open
-                    ? {
-                        mr: 3,
-                      }
-                    : {
-                        mr: "auto",
-                      },
-                ]}
-              >
-                <InfoSharpIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="About"
-                sx={[
-                  open
-                    ? {
-                        opacity: 1,
-                      }
-                    : {
-                        opacity: 0,
-                      },
-                ]}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/settings");
-            }}
-          >
-            <ListItemButton
-              sx={[
-                {
-                  minHeight: 48,
-                  px: 2.5,
-                },
-                open
-                  ? {
-                      justifyContent: "initial",
-                    }
-                  : {
-                      justifyContent: "center",
-                    },
-              ]}
-            >
-              <ListItemIcon
-                sx={[
-                  {
-                    minWidth: 0,
-                    justifyContent: "center",
-                  },
-                  open
-                    ? {
-                        mr: 3,
-                      }
-                    : {
-                        mr: "auto",
-                      },
-                ]}
-              >
-                <SettingsSharpIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Settings"
-                sx={[
-                  open
-                    ? {
-                        opacity: 1,
-                      }
-                    : {
-                        opacity: 0,
-                      },
-                ]}
-              />
-            </ListItemButton>
-          </ListItem>
+                    mr: open ? 3 : "auto",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
     </Box>
