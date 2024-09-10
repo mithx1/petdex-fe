@@ -77,15 +77,15 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideNav() {
-  const dispatch = useDispatch();
   const open = useSelector(selectDrawerOpen);
   const navigate = useNavigate();
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
+      <Box height={30} />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={() => dispatch(toggleDrawer())}>
+          <IconButton>
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
