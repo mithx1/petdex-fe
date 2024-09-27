@@ -1,0 +1,6 @@
+@PetdexUserApi_HostAddress = http://localhost:5228
+
+GET {{PetdexUserApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
