@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import Settings from "./pages/Settings";
+import SignInPage from "./pages/SignInPage";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/signin" element={<SignInPage />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -71,10 +71,10 @@ const menuItems = [
   { text: "Home", icon: <BungalowSharpIcon />, path: "/" },
   { text: "About", icon: <InfoSharpIcon />, path: "/about" },
   { text: "Settings", icon: <SettingsSharpIcon />, path: "/settings" },
+  { text: "Registration", icon: <SettingsSharpIcon />, path: "/signin" },
 ];
 
 export default function SideNav() {
-  const dispatch = useDispatch();
   const open = useSelector(selectDrawerOpen);
   const navigate = useNavigate();
 
@@ -82,11 +82,7 @@ export default function SideNav() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={() => dispatch(toggleDrawer())}>
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
+        <DrawerHeader></DrawerHeader>
         <Divider />
         <List>
           {menuItems.map((item, index) => (
